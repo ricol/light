@@ -51,7 +51,7 @@ type
     GameRecordData: array of TPoint;
     GameRecordFlag, GameTmpFlag: integer;
     GameRecord, GameRecordShow: boolean;
-    procedure ShowContentToForm(tmpContent: TContent; i, j: integer);
+    procedure ShowContentToForm(content: TContent; i, j: integer);
     procedure InitData();
     procedure FreeData();
     procedure ShowData();
@@ -122,18 +122,18 @@ begin
   Self.Width := GameDif * PANELWIDTH + 35;
 end;
 
-procedure TFormMain.ShowContentToForm(tmpContent: TContent; i, j: integer);
+procedure TFormMain.ShowContentToForm(content: TContent; i, j: integer);
 var
-  tmpI, tmpJ: integer;
+  m, n: integer;
 begin
-  tmpI := i * MULX + STARTX;
-  tmpJ := j * MULY + STARTY;
+  m := i * MULX + STARTX;
+  n := j * MULY + STARTY;
   Self.Canvas.Pen.Color := clBlack;
-  if tmpContent = WHITE then
+  if content = WHITE then
     Self.Canvas.Brush.Color := clWhite
   else
     Self.Canvas.Brush.Color := clBlack;
-  Self.Canvas.Rectangle(tmpI, tmpJ, tmpI + PANELWIDTH, tmpJ + PANELHEIGHT);
+  Self.Canvas.Rectangle(m, n, m + PANELWIDTH, n + PANELHEIGHT);
 end;
 
 procedure TFormMain.FreeData;
@@ -168,82 +168,82 @@ end;
 
 function TFormMain.GetI(X, Y: integer): integer;
 var
-  tmp: integer;
+  k: integer;
 begin
   result := -1;
-  tmp := (X - STARTX) div MULX;
-  if (tmp >= 0) and (tmp <= GameDif - 1) then
-    result := tmp;
+  k := (X - STARTX) div MULX;
+  if (k >= 0) and (k <= GameDif - 1) then
+    result := k;
 end;
 
 function TFormMain.GetJ(X, Y: integer): integer;
 var
-  tmp: integer;
+  k: integer;
 begin
   result := -1;
-  tmp := (Y - STARTY) div MULY;
-  if (tmp >= 0) and (tmp <= GameDif - 1) then
-    result := tmp;
+  k := (Y - STARTY) div MULY;
+  if (k >= 0) and (k <= GameDif - 1) then
+    result := k;
 end;
 
 procedure TFormMain.FormMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 var
-  tmpI, tmpJ: integer;
+  m, n: integer;
 begin
-  tmpI := GetI(X, Y);
-  tmpJ := GetJ(X, Y);
-  if (tmpI = -1) or (tmpJ = -1) then exit;
+  m := GetI(X, Y);
+  n := GetJ(X, Y);
+  if (m = -1) or (n = -1) then exit;
   if GameRecord then
   begin
-    GameRecordData[GameRecordFlag].X := tmpI;
-    GameRecordData[GameRecordFlag].Y := tmpJ;
+    GameRecordData[GameRecordFlag].X := m;
+    GameRecordData[GameRecordFlag].Y := n;
     inc(GameRecordFlag);
   end;
-  if (tmpI >= 0) and (tmpI <= GameDif - 1) and
-     (tmpJ >= 0) and (tmpJ <= GameDif - 1) then
+  if (m >= 0) and (m <= GameDif - 1) and
+     (n >= 0) and (n <= GameDif - 1) then
   begin
-    if GameData[tmpI, tmpJ] = WHITE then
-      GameData[tmpI, tmpJ] := BLACK
+    if GameData[m, n] = WHITE then
+      GameData[m, n] := BLACK
     else
-      GameData[tmpI, tmpJ] := WHITE;
-    ShowContentToForm(GameData[tmpI, tmpJ], tmpI, tmpJ);
+      GameData[m, n] := WHITE;
+    ShowContentToForm(GameData[m, n], m, n);
   end;
-  if (tmpI - 1 >= 0) and (tmpI - 1 <= GameDif - 1) and
-     (tmpJ >= 0) and (tmpJ <= GameDif - 1) then
+  if (m - 1 >= 0) and (m - 1 <= GameDif - 1) and
+     (n >= 0) and (n <= GameDif - 1) then
   begin
-    if GameData[tmpI - 1, tmpJ] = WHITE then
-      GameData[tmpI - 1, tmpJ] := BLACK
+    if GameData[m - 1, n] = WHITE then
+      GameData[m - 1, n] := BLACK
     else
-      GameData[tmpI - 1, tmpJ] := WHITE;
-    ShowContentToForm(GameData[tmpI - 1, tmpJ], tmpI - 1, tmpJ);
+      GameData[m - 1, n] := WHITE;
+    ShowContentToForm(GameData[m - 1, n], m - 1, n);
   end;
-  if (tmpI >= 0) and (tmpI <= GameDif - 1) and
-     (tmpJ - 1 >= 0) and (tmpJ - 1 <= GameDif - 1) then
+  if (m >= 0) and (m <= GameDif - 1) and
+     (n - 1 >= 0) and (n - 1 <= GameDif - 1) then
   begin
-    if GameData[tmpI, tmpJ - 1] = WHITE then
-      GameData[tmpI, tmpJ - 1] := BLACK
+    if GameData[m, n - 1] = WHITE then
+      GameData[m, n - 1] := BLACK
     else
-      GameData[tmpI, tmpJ - 1] := WHITE;
-    ShowContentToForm(GameData[tmpI, tmpJ - 1], tmpI, tmpJ - 1);
+      GameData[m, n - 1] := WHITE;
+    ShowContentToForm(GameData[m, n - 1], m, n - 1);
   end;
-  if (tmpI + 1 >= 0) and (tmpI + 1 <= GameDif - 1) and
-     (tmpJ >= 0) and (tmpJ <= GameDif - 1) then
+  if (m + 1 >= 0) and (m + 1 <= GameDif - 1) and
+     (n >= 0) and (n <= GameDif - 1) then
   begin
-    if GameData[tmpI + 1, tmpJ] = WHITE then
-      GameData[tmpI + 1, tmpJ] := BLACK
+    if GameData[m + 1, n] = WHITE then
+      GameData[m + 1, n] := BLACK
     else
-      GameData[tmpI + 1, tmpJ] := WHITE;
-    ShowContentToForm(GameData[tmpI + 1, tmpJ], tmpI + 1, tmpJ);
+      GameData[m + 1, n] := WHITE;
+    ShowContentToForm(GameData[m + 1, n], m + 1, n);
   end;
-  if (tmpI >= 0) and (tmpI <= GameDif - 1) and
-     (tmpJ + 1 >= 0) and (tmpJ + 1 <= GameDif - 1) then
+  if (m >= 0) and (m <= GameDif - 1) and
+     (n + 1 >= 0) and (n + 1 <= GameDif - 1) then
   begin
-    if GameData[tmpI, tmpJ + 1] = WHITE then
-      GameData[tmpI, tmpJ + 1] := BLACK
+    if GameData[m, n + 1] = WHITE then
+      GameData[m, n + 1] := BLACK
     else
-      GameData[tmpI, tmpJ + 1] := WHITE;
-    ShowContentToForm(GameData[tmpI, tmpJ + 1], tmpI, tmpJ + 1);
+      GameData[m, n + 1] := WHITE;
+    ShowContentToForm(GameData[m, n + 1], m, n + 1);
   end;
   if CheckGame() then
   begin
@@ -291,12 +291,12 @@ end;
 procedure TFormMain.MenuRecordShowClick(Sender: TObject);
 var
   i: integer;
-  tmp: string;
+  s: string;
 begin
-  tmp := '';
+  s := '';
   for i := 0 to GameRecordFlag - 1 do
-    tmp := tmp + #$D + #$A + format('(%d, %d)', [GameRecordData[i].X, GameRecordData[i].Y]);
-  MessageBox(0, PChar(tmp), '记录', MB_OK);
+    s := s + #$D + #$A + format('(%d, %d)', [GameRecordData[i].X, GameRecordData[i].Y]);
+  MessageBox(0, PChar(s), '记录', MB_OK);
 end;
 
 procedure TFormMain.MenuRecordReshowClick(Sender: TObject);
@@ -308,53 +308,53 @@ end;
 
 procedure TFormMain.MenuRecordSaveClick(Sender: TObject);
 var
-  tmpString: TStringList;
-  tmpS: string;
+  list: TStringList;
+  s: string;
   i: integer;
 begin
   if GameRecordFlag = 0 then exit;
-  tmpString := TStringList.Create;
+  list := TStringList.Create;
   try
     for i := 0 to GameRecordFlag - 1 do
     begin
-      tmpS := format('(%d, %d)', [GameRecordData[i].X, GameRecordData[i].Y]);
-      tmpString.Add(tmpS);
+      s := format('(%d, %d)', [GameRecordData[i].X, GameRecordData[i].Y]);
+      list.Add(s);
     end;
-    tmpString.SaveToFile('GameRecord.txt');
+    list.SaveToFile('GameRecord.txt');
     MessageBox(0, '记录保存成功.', '信息', MB_OK);
   finally
-    tmpString.Free;
+    list.Free;
   end;
 end;
 
 procedure TFormMain.MenuRecordLoadClick(Sender: TObject);
 var
-  tmpString: TStringList;
-  tmpS, tmpLeft, tmpRight: string;
+  list: TStringList;
+  s, left, right: string;
   i: integer;
 begin
-  tmpString := TStringList.Create;
+  list := TStringList.Create;
   try
-    tmpString.LoadFromFile('GameRecord.txt');
-    for i := 0 to tmpString.Count - 1 do
+    list.LoadFromFile('GameRecord.txt');
+    for i := 0 to list.Count - 1 do
     begin
-      tmpS := '';
-      tmpS := tmpString.Strings[i];
-      tmpLeft := '';
-      tmpLeft := LeftString(tmpS, 2);
-      tmpRight := '';
-      tmpRight := RightString(tmpLeft, 1);
-      GameRecordData[i].X := StrToInt(tmpRight);
-      tmpRight := '';
-      tmpRight := RightString(tmpS, 2);
-      tmpLeft := '';
-      tmpLeft := LeftString(tmpRight, 1);
-      GameRecordData[i].Y := StrToInt(tmpLeft);
+      s := '';
+      s := list.Strings[i];
+      left := '';
+      left := LeftString(s, 2);
+      right := '';
+      right := RightString(left, 1);
+      GameRecordData[i].X := StrToInt(right);
+      right := '';
+      right := RightString(s, 2);
+      left := '';
+      left := LeftString(right, 1);
+      GameRecordData[i].Y := StrToInt(left);
     end;
-    GameRecordFlag := tmpString.Count;
+    GameRecordFlag := list.Count;
     MessageBox(0, '记录载入成功.', '信息', MB_OK);
   finally
-    tmpString.Free;
+    list.Free;
   end;
 end;
 
@@ -365,7 +365,7 @@ end;
 
 procedure TFormMain.TimerRecordShowTimer(Sender: TObject);
 var
-  tmpX, tmpY: integer;
+  x, y: integer;
 begin
   if not GameRecordShow then
   begin
@@ -383,9 +383,9 @@ begin
     FormPaint(Sender);
   end;
   Self.Caption := '点灯游戏' + ' - ' + IntToStr(GameTmpFlag) + '/' + IntToStr(GameRecordFlag - 1);
-  tmpX := GameRecordData[GameTmpFlag].X * MULX + STARTX + 25;
-  tmpY := GameRecordData[GameTmpFlag].Y * MULY + STARTY + 75;
-  SetCursorPos(Self.Left + tmpX, Self.Top + tmpY);
+  x := GameRecordData[GameTmpFlag].X * MULX + STARTX + 25;
+  y := GameRecordData[GameTmpFlag].Y * MULY + STARTY + 75;
+  SetCursorPos(Self.Left + x, Self.Top + y);
   inc(GameTmpFlag);
   if GameTmpFlag >= GameRecordFlag then
   begin
@@ -394,7 +394,7 @@ begin
     MenuRecordReshow.Checked := false;
     GameRecordShow := false;
   end;
-  FormMouseDown(Sender, mbLeft, [], tmpX, tmpY - 50);
+  FormMouseDown(Sender, mbLeft, [], x, y - 50);
 end;
 
 end.
