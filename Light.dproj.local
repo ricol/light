@@ -1,7 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-  <Transactions>
-    <Transaction>2020/08/22 02:34:53.429,C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\LightGame\Main.dfm=C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\LightGame\UnitMain.dfm</Transaction>
-    <Transaction>2020/08/22 02:34:53.429,C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\LightGame\Main.pas=C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\LightGame\UnitMain.pas</Transaction>
-  </Transactions>
-</BorlandProject>
+<BorlandProject/>
