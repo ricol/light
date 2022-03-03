@@ -2,7 +2,8 @@ program Light;
 
 uses
   Forms,
-  Main in 'Main.pas' {FormMain};
+  Main in 'Main.pas' {FormMain},
+  MyUnit in 'MyUnit.pas';
 
 {$R *.res}
 
